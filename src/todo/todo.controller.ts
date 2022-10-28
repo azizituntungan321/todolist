@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Put, Delete,Param,Res} from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Put, Delete,Param,Res, Query} from '@nestjs/common';
 import { TodoEntity } from './todo.entity/todo.entity';
 import { TodoService } from './todo.service';
 import { AppResponse } from 'src/response.base';
@@ -13,6 +13,20 @@ export class TodoController {
         try {
             let data = await this.service.getTodo(params.id)
             if(!data){
+                return AppResponse.notFound(res, "", "")
+            }
+            return AppResponse.ok(res, data, "Success")
+        } catch (e) {
+            return AppResponse.badRequest(res, "", e.message)
+        }
+    }
+
+    @Get()
+    async getAll(@Res() res, @Req() req) {
+        try {
+            const id =  req.query.activity_group_id
+            let data = await this.service.getTodos(id)
+            if(!data.length){
                 return AppResponse.notFound(res, "", "")
             }
             return AppResponse.ok(res, data, "Success")

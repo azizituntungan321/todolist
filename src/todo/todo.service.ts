@@ -15,8 +15,14 @@ export class TodoService {
         return TodoTransformer.singleTransform(await this.todosRepository.save(todo))
     }
 
-    async getTodos(todo: TodoEntity): Promise<TodoEntity[]> {
-        return await this.todosRepository.find();
+    async getTodos(activity_group_id: string): Promise<TodoEntity[]> {
+        let data = await this.todosRepository.find({
+            where: {activity_group_id}
+        })
+        if (!data) {
+            return null;
+        }
+        return data
     }
 
     async getTodo(id: number): Promise<TodoEntity> {
@@ -25,7 +31,6 @@ export class TodoService {
             return null;
         }
         return data
-        // return TodoTransformer.singleTransform(data)
     }
 
     async updateTodo(todo: TodoEntity) {

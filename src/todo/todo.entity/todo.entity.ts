@@ -5,18 +5,18 @@ export class TodoEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
+    
+    @Column() 
+    activity_group_id:string;
 
     @Column({ length: 600 })
     title:string;
     
     @Column() 
-    priority:string;
-
-    @Column() 
-    activity_group_id:string;
-
-    @Column() 
     is_active:boolean;
+
+    @Column() 
+    priority:string;
 
     @CreateDateColumn()
     created_at: Date;
