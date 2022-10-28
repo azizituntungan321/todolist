@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Get, Put, Delete,Param,Res, Query} from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Put, Delete,Param,Res, Query, Patch} from '@nestjs/common';
 import { TodoEntity } from './todo.entity/todo.entity';
 import { TodoService } from './todo.service';
 import { AppResponse } from 'src/response.base';
@@ -45,9 +45,19 @@ export class TodoController {
         }
     }
 
-    @Put()
-    update(@Body() todo: TodoEntity) {
-        return this.service.updateTodo(todo);
+    @Patch(':id')
+    async update(@Res() res, @Body() todo: TodoEntity, @Param() params) {
+        console.log(todo)
+        try {
+            let check = await this.service.getTodo(params.id)
+            if(!check){
+                return AppResponse.notFound(res, "", "")
+            }
+            let data = await this.service.updateTodo(params.id,todo)
+            return AppResponse.ok(res, data, "Success")
+        } catch (e) {
+            return AppResponse.badRequest(res, "", e.message)
+        }
     }
 
     @Delete(':id')

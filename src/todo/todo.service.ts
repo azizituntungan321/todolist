@@ -33,8 +33,12 @@ export class TodoService {
         return data
     }
 
-    async updateTodo(todo: TodoEntity) {
-        this.todosRepository.save(todo)
+    async updateTodo(id: number,todo: TodoEntity) {
+        let data = await this.todosRepository.update(id,todo)
+        if (!data) {
+            return null;
+        }
+        return await this.todosRepository.findOneBy({ id })
     }
 
     async deleteTodo(todo: TodoEntity) {
