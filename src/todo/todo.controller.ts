@@ -12,8 +12,9 @@ export class TodoController {
     async get(@Res() res, @Param() params) {
         try {
             let data = await this.service.getTodo(params.id)
-            if(!data)
-            return AppResponse.notFound(res, "", "Success")
+            if(!data){
+                return AppResponse.notFound(res, "", "")
+            }
             return AppResponse.ok(res, data, "Success")
         } catch (e) {
             return AppResponse.badRequest(res, "", e.message)
@@ -36,7 +37,16 @@ export class TodoController {
     }
 
     @Delete(':id')
-    deleteTodo(@Param() params) {
-        return this.service.deleteTodo(params.id);
+    async deleteTodo(@Res() res, @Param() params) {
+        try {
+            let check = await this.service.getTodo(params.id)
+            if(!check){
+                return AppResponse.notFound(res, "", "")
+            }
+            let data = await this.service.deleteTodo(params.id,)
+            return AppResponse.ok(res, {}, "Success")
+        } catch (e) {
+            return AppResponse.badRequest(res, "", e.message)
+        }
     }
 }

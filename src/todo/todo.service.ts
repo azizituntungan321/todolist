@@ -33,6 +33,7 @@ export class TodoService {
     }
 
     async deleteTodo(todo: TodoEntity) {
-        this.todosRepository.delete(todo);
+        await this.todosRepository.delete(todo);
+        return null
     }
 }
