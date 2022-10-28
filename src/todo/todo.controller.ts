@@ -9,27 +9,34 @@ export class TodoController {
     constructor(private service: TodoService) { }
 
     @Get(':id')
-    get(@Param() params) {
-        return this.service.getUser(params.id);
+    async get(@Res() res, @Param() params) {
+        try {
+            let data = await this.service.getTodo(params.id)
+            if(!data)
+            return AppResponse.notFound(res, "", "Success")
+            return AppResponse.ok(res, data, "Success")
+        } catch (e) {
+            return AppResponse.badRequest(res, "", e.message)
+        }
     }
 
     @Post()
-    async create(@Res() res, @Body() user: TodoEntity) {
+    async create(@Res() res, @Body() todo: TodoEntity) {
         try {
-            let data = await this.service.createUser(user)
-            return AppResponse.ok(res, data, "Success create todo!")
+            let data = await this.service.createTodo(todo)
+            return AppResponse.ok(res, data, "Success")
         } catch (e) {
             return AppResponse.badRequest(res, "", e.message)
         }
     }
 
     @Put()
-    update(@Body() user: TodoEntity) {
-        return this.service.updateUser(user);
+    update(@Body() todo: TodoEntity) {
+        return this.service.updateTodo(todo);
     }
 
     @Delete(':id')
-    deleteUser(@Param() params) {
-        return this.service.deleteUser(params.id);
+    deleteTodo(@Param() params) {
+        return this.service.deleteTodo(params.id);
     }
 }

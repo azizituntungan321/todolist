@@ -3,8 +3,9 @@ export class TodoTransformer extends BaseTransformer {
 
     static singleTransform (element) {
         return {
-            created_at: element.created_at,
-            updated_at: element.updated_at,
+            created_at: element.created_at ?? null,
+            updated_at: element.updated_at ?? null,
+            deleted_at: element.deleted_at ?? null,
             id: element.id,
             title: element.title,
             priority: element.priority,

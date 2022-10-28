@@ -7,32 +7,32 @@ import { TodoTransformer } from './todo.transformer';
 @Injectable()
 export class TodoService {
 
-    constructor(@InjectRepository(TodoEntity) private usersRepository: Repository<TodoEntity>) { }
+    constructor(@InjectRepository(TodoEntity) private todosRepository: Repository<TodoEntity>) { }
 
-    async createUser(user: TodoEntity){
-        // this.usersRepository.save(user)
-
-        user.is_active = true;
-        user.priority = 'very-high'
-        return TodoTransformer.singleTransform(await this.usersRepository.save(user))
+    async createTodo(todo: TodoEntity){
+        todo.is_active = true;
+        todo.priority = 'very-high'
+        return TodoTransformer.singleTransform(await this.todosRepository.save(todo))
     }
 
-    async getUsers(user: TodoEntity): Promise<TodoEntity[]> {
-        return await this.usersRepository.find();
+    async getTodos(todo: TodoEntity): Promise<TodoEntity[]> {
+        return await this.todosRepository.find();
     }
 
-    async getUser(_id: number): Promise<TodoEntity[]> {
-        return await this.usersRepository.find({
-            select: ["title"],
-            where: [{ "id": _id }]
-        });
+    async getTodo(id: number): Promise<TodoEntity> {
+        let data = await this.todosRepository.findOneBy({ id })
+        if (!data) {
+            return null;
+        }
+        return data
+        // return TodoTransformer.singleTransform(data)
     }
 
-    async updateUser(user: TodoEntity) {
-        this.usersRepository.save(user)
+    async updateTodo(todo: TodoEntity) {
+        this.todosRepository.save(todo)
     }
 
-    async deleteUser(user: TodoEntity) {
-        this.usersRepository.delete(user);
+    async deleteTodo(todo: TodoEntity) {
+        this.todosRepository.delete(todo);
     }
 }

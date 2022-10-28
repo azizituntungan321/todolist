@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()
 export class TodoEntity {
@@ -24,10 +24,6 @@ export class TodoEntity {
     @UpdateDateColumn()
     updated_at: Date;
 
-    // @Column({ type: 'timestamp' })
-    // created_at:Date;
-
-    // @Column({ type: 'timestamp' })
-    // updated_at:Date;
-    
+    @DeleteDateColumn()
+    deleted_at: Date;
 }
