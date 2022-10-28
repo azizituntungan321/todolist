@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TodoEntity } from './todo.entity/todo.entity';
+import { TodoTransformer } from './todo.transformer';
 
 @Injectable()
 export class TodoService {
@@ -9,7 +10,11 @@ export class TodoService {
     constructor(@InjectRepository(TodoEntity) private usersRepository: Repository<TodoEntity>) { }
 
     async createUser(user: TodoEntity){
-        this.usersRepository.save(user)
+        // this.usersRepository.save(user)
+
+        user.is_active = true;
+        user.priority = 'very-high'
+        return TodoTransformer.singleTransform(await this.usersRepository.save(user))
     }
 
     async getUsers(user: TodoEntity): Promise<TodoEntity[]> {
@@ -18,7 +23,7 @@ export class TodoService {
 
     async getUser(_id: number): Promise<TodoEntity[]> {
         return await this.usersRepository.find({
-            select: ["fullName", "birthday", "isActive"],
+            select: ["title"],
             where: [{ "id": _id }]
         });
     }

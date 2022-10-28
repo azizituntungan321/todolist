@@ -3,22 +3,30 @@ export class AppResponse {
 
     static ok(@Res() res, values: any, message: String = ""): Response {
         return res.status(HttpStatus.OK).json({
-            "statusCode": HttpStatus.OK,
-            "message": message,
+            "status": "Success",
+            "message": "Success",
+            "data": values
+        })
+    }
+
+    static created(@Res() res, values: any, message: String = ""): Response {
+        return res.status(HttpStatus.CREATED).json({
+            "status": "Success",
+            "message": "Success",
             "data": values
         })
     }
 
     static badRequest(@Res() res, values: any, message: String = ""): Response {
         return res.status(HttpStatus.BAD_REQUEST).json({
-            "statusCode": HttpStatus.BAD_REQUEST,
+            "status": HttpStatus.BAD_REQUEST,
             "message": message,
         })
     }
 
     static notFound(@Res() res, values: any, message: String = ""): Response {
         return res.status(HttpStatus.NOT_FOUND).json({
-            "statusCode": HttpStatus.NOT_FOUND,
+            "status": HttpStatus.NOT_FOUND,
             "message": 'Data Not Found!',
         })
     }

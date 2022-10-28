@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Get, Put, Delete,Param} from '@nestjs/common';
+import { Controller, Post, Body, Get, Put, Delete,Param,Res} from '@nestjs/common';
 import { TodoEntity } from './todo.entity/todo.entity';
 import { TodoService } from './todo.service';
+import { AppResponse } from 'src/response.base';
 
-@Controller('todo')
+@Controller('todo-items')
 export class TodoController {
 
     constructor(private service: TodoService) { }
@@ -13,8 +14,13 @@ export class TodoController {
     }
 
     @Post()
-    create(@Body() user: TodoEntity) {
-        return this.service.createUser(user);
+    async create(@Res() res, @Body() user: TodoEntity) {
+        try {
+            let data = await this.service.createUser(user)
+            return AppResponse.ok(res, data, "Success create todo!")
+        } catch (e) {
+            return AppResponse.badRequest(res, "", e.message)
+        }
     }
 
     @Put()
