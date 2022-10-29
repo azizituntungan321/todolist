@@ -5,6 +5,8 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TodoEntity } from './todo/entity/todos';
+import { ActivitiesModule } from './activities/activities.module';
+import { ActivitesModule } from './activites/activites.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { TodoEntity } from './todo/entity/todos';
       synchronize: true,
     }),
     TodoModule,
+    ActivitiesModule,
+    ActivitesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
