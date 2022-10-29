@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { TodoEntity } from './todo/entity/todos';
+import { TodoEntity } from './todo/entity/todos.entity';
 import { ActivitiesModule } from './activities/activities.module';
 import { ActivitesModule } from './activites/activites.module';
 

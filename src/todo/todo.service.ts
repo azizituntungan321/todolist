@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TodoEntity } from './entity/todos';
+import { TodoEntity } from './entity/todos.entity';
 import { TodoTransformer } from './todo.transformer';
 
 @Injectable()
