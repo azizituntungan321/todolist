@@ -5,7 +5,6 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TodoEntity } from './todo/entity/todos.entity';
-import { ActivitiesModule } from './activities/activities.module';
 import { ActivitesModule } from './activites/activites.module';
 
 @Module({
@@ -13,8 +12,8 @@ import { ActivitesModule } from './activites/activites.module';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // host: 'localhost',
-      host: 'host.docker.internal',
+      host: 'localhost',
+      // host: 'host.docker.internal',
       port: +process.env.MYSQL_PORT,
       username: `${process.env.MYSQL_USER}`,
       password: `${process.env.MYSQL_PASSWORD}`,
@@ -24,7 +23,6 @@ import { ActivitesModule } from './activites/activites.module';
       synchronize: true,
     }),
     TodoModule,
-    ActivitiesModule,
     ActivitesModule,
   ],
   controllers: [AppController],

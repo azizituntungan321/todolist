@@ -47,7 +47,6 @@ export class TodoController {
 
     @Patch(':id')
     async update(@Res() res, @Body() todo: TodoEntity, @Param() params) {
-        console.log(todo)
         try {
             let check = await this.service.getTodo(params.id)
             if(!check){
