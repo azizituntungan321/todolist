@@ -1,4 +1,4 @@
-import { TodoEntity } from './todo.entity';
+import { TodoEntity } from './todos';
 
 describe('TodoEntity', () => {
   it('should be defined', () => {

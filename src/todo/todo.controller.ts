@@ -1,5 +1,5 @@
 import { Controller, Post, Body, Req, Get, Put, Delete,Param,Res, Query, Patch} from '@nestjs/common';
-import { TodoEntity } from './todo.entity/todo.entity';
+import { TodoEntity } from './entity/todos';
 import { TodoService } from './todo.service';
 import { AppResponse } from 'src/response.base';
 
