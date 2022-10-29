@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { TodoEntity } from './todo/todo.entity/todo.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
       username: `${process.env.MYSQL_USER}`,
       password: `${process.env.MYSQL_PASSWORD}`,
       database: `${process.env.MYSQL_DBNAME}`,
-      entities: [],
+      entities: [TodoEntity],
       synchronize: true,
     }),
     TodoModule,
