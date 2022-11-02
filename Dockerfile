@@ -1,19 +1,15 @@
-FROM node:alpine AS development
-EXPOSE 3030/tcp
-WORKDIR /srv/app
-COPY package*.json ./
-RUN npm install glob rimraf
-RUN npm install --only=development
-COPY . .
-RUN npm run build
+FROM node
 
-FROM node:alpine as production
-EXPOSE 3030/tcp
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+# Create app directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install --only=production
-COPY . .
-RUN npm run build
-CMD ["npm", "run", "start:prod"]
+
+# Install app dependencies
+COPY package.json /usr/src/app/
+RUN npm install
+
+# Bundle app source
+COPY . /usr/src/app
+
+EXPOSE 8080
+CMD [ "npm", "start" ]
